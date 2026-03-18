@@ -14,6 +14,15 @@ class User extends Authenticatable implements JWTSubject
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
 
+    protected static function booted()
+    {
+        static::updating(function ($user) {
+            if ($user->isDirty('role')) {
+                $user->role = $user->getOriginal('role');
+            }
+        });
+    }
+
     /**
      * The attributes that are mass assignable.
      *
