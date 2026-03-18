@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repositories\Eloquent;
+namespace App\Repositories;
 
 use App\Models\User;
 use App\Repositories\Contracts\UserRepositoryInterface;
