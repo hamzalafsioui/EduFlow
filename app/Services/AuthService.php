@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Repositories\Contracts\UserRepositoryInterface;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password;
 use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
 
 class AuthService
@@ -59,5 +60,21 @@ class AuthService
     {
         $user = auth('api')->user();
         return $user ? $user->load('interests') : null;
+    }
+
+    public function forgotPassword(string $email)
+    {
+        return Password::broker()->sendResetLink(['email' => $email]);
+    }
+
+    public function resetPassword(array $data)
+    {
+        return Password::broker()->reset(
+            $data,
+            function ($user, $password) {
+                $user->password = Hash::make($password);
+                $user->save();
+            }
+        );
     }
 }
