@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\PasswordResetController;
 use App\Http\Controllers\Api\CourseController;
+use App\Http\Controllers\Api\WishlistController;
 use Illuminate\Support\Facades\Route;
 
 Route::group([
@@ -28,6 +29,10 @@ Route::group([
 });
 
 Route::middleware(['api', 'auth:api'])->group(function () {
+    // Wishlist Management
+    Route::get('wishlist', [WishlistController::class, 'index']);
+    Route::post('wishlist/courses/{course}', [WishlistController::class, 'toggle']);
+
     // Course Management
     Route::get('courses/recommended', [CourseController::class, 'recommended']);
     Route::apiResource('courses', CourseController::class);
