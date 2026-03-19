@@ -19,6 +19,19 @@ class CourseController extends Controller
     }
 
     /**
+     * Display recommended courses for the authenticated student.
+     */
+    public function recommended()
+    {
+        $user = Auth::user();
+        if (!$user) {
+            return response()->json(['error' => 'Unauthenticated'], 401);
+        }
+        $courses = $this->courseService->getRecommendedCourses($user);
+        return response()->json($courses);
+    }
+
+    /**
      * Display a listing of the resource.
      */
     public function index()
