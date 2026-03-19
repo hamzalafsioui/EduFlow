@@ -20,6 +20,10 @@ class DatabaseSeeder extends Seeder
         User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
+            'role' => 'student',
         ]);
+
+        $this->call(CategorySeeder::class);
+        $this->call(CourseSeeder::class);
     }
 }
