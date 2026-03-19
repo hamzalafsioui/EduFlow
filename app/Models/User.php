@@ -73,6 +73,11 @@ class User extends Authenticatable implements JWTSubject
         return $this->belongsToMany(Category::class, 'user_interests');
     }
 
+    public function wishlistCourses()
+    {
+        return $this->belongsToMany(Course::class, 'wishlists');
+    }
+
     /**
      * Get the identifier that will be stored in the subject claim of the JWT.
      *
