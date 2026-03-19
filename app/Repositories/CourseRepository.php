@@ -34,4 +34,11 @@ class CourseRepository implements CourseRepositoryInterface
         $course = Course::findOrFail($id);
         return $course->delete();
     }
+
+    public function getRecommended(array $categoryIds)
+    {
+        return Course::with(['teacher', 'category'])
+            ->whereIn('category_id', $categoryIds)
+            ->get();
+    }
 }
