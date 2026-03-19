@@ -37,4 +37,19 @@ class CourseService
     {
         return $this->courseRepository->delete($id);
     }
+
+    public function getRecommendedCourses($user)
+    {
+        if (!$user->isStudent()) {
+            return collect([]);
+        }
+
+        $interestIds = $user->interests()->pluck('categories.id')->toArray();
+
+        if (empty($interestIds)) {
+            return collect([]);
+        }
+
+        return $this->courseRepository->getRecommended($interestIds);
+    }
 }
