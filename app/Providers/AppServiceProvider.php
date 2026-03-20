@@ -9,6 +9,8 @@ use App\Repositories\Contracts\CourseRepositoryInterface;
 use App\Repositories\CourseRepository;
 use App\Repositories\Contracts\WishlistRepositoryInterface;
 use App\Repositories\WishlistRepository;
+use App\Repositories\Contracts\EnrollmentRepositoryInterface;
+use App\Repositories\EnrollmentRepository;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -20,6 +22,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
         $this->app->bind(CourseRepositoryInterface::class, CourseRepository::class);
         $this->app->bind(WishlistRepositoryInterface::class, WishlistRepository::class);
+        $this->app->bind(EnrollmentRepositoryInterface::class, EnrollmentRepository::class);
     }
 
     /**
