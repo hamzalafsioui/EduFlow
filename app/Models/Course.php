@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use App\Models\Category;
+use App\Models\Group;
 
 class Course extends Model
 {
@@ -33,5 +34,10 @@ class Course extends Model
     public function students()
     {
         return $this->belongsToMany(User::class, 'enrollments');
+    }
+
+    public function groups()
+    {
+        return $this->hasMany(Group::class);
     }
 }
