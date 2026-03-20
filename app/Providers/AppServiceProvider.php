@@ -11,6 +11,8 @@ use App\Repositories\Contracts\WishlistRepositoryInterface;
 use App\Repositories\WishlistRepository;
 use App\Repositories\Contracts\EnrollmentRepositoryInterface;
 use App\Repositories\EnrollmentRepository;
+use App\Repositories\Contracts\GroupRepositoryInterface;
+use App\Repositories\GroupRepository;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,6 +25,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(CourseRepositoryInterface::class, CourseRepository::class);
         $this->app->bind(WishlistRepositoryInterface::class, WishlistRepository::class);
         $this->app->bind(EnrollmentRepositoryInterface::class, EnrollmentRepository::class);
+        $this->app->bind(GroupRepositoryInterface::class, GroupRepository::class);
     }
 
     /**
