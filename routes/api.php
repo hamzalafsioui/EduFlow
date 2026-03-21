@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\CourseController;
 use App\Http\Controllers\Api\WishlistController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\TeacherController;
+use App\Http\Controllers\Api\EnrollmentController;
 
 Route::group([
     'middleware' => 'api',
@@ -36,7 +37,10 @@ Route::middleware(['api', 'auth:api'])->group(function () {
     Route::get('teacher/courses/{course}/groups', [TeacherController::class, 'courseGroups']);
     Route::get('teacher/courses/{course}/groups/{group}/students', [TeacherController::class, 'groupStudents']);
 
-   
+    // Enrollment
+    Route::post('courses/{course}/checkout', [EnrollmentController::class, 'checkout']);
+    Route::get('courses/{course}/enroll/success', [EnrollmentController::class, 'success']);
+    Route::delete('courses/{course}/enroll', [EnrollmentController::class, 'withdraw']);
 
     // Wishlist Management
     Route::get('wishlist', [WishlistController::class, 'index']);
