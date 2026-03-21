@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\PasswordResetController;
 use App\Http\Controllers\Api\CourseController;
 use App\Http\Controllers\Api\WishlistController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\TeacherController;
 
 Route::group([
     'middleware' => 'api',
@@ -29,6 +30,14 @@ Route::group([
 });
 
 Route::middleware(['api', 'auth:api'])->group(function () {
+    // Teacher Specific
+    Route::get('teacher/courses/{course}/students', [TeacherController::class, 'courseStudents']);
+    Route::get('teacher/statistics', [TeacherController::class, 'statistics']);
+    Route::get('teacher/courses/{course}/groups', [TeacherController::class, 'courseGroups']);
+    Route::get('teacher/courses/{course}/groups/{group}/students', [TeacherController::class, 'groupStudents']);
+
+   
+
     // Wishlist Management
     Route::get('wishlist', [WishlistController::class, 'index']);
     Route::post('wishlist/courses/{course}', [WishlistController::class, 'toggle']);
