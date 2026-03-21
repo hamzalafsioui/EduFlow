@@ -55,5 +55,15 @@ class TeacherController extends Controller
         }
     }
 
-   
+    public function groupStudents(string $courseId, string $groupId)
+    {
+        try {
+            $user = Auth::user();
+            $course = Course::findOrFail((int)$courseId);
+            $students = $this->groupService->getGroupStudents($user, $course, (int)$groupId);
+            return response()->json($students);
+        } catch (Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 403);
+        }
+    }
 }
