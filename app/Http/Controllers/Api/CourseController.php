@@ -19,7 +19,14 @@ class CourseController extends Controller
     }
 
     /**
-     * Display recommended courses for the authenticated student.
+     * @OA\Get(
+     *     path="/courses/recommended",
+     *     summary="Display recommended courses for the authenticated student",
+     *     tags={"Courses"},
+     *     security={{"bearerAuth":{}}},
+     *     @OA\Response(response=200, description="List of recommended courses"),
+     *     @OA\Response(response=401, description="Unauthenticated")
+     * )
      */
     public function recommended()
     {
@@ -32,7 +39,13 @@ class CourseController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * @OA\Get(
+     *     path="/courses",
+     *     summary="Display a listing of courses",
+     *     tags={"Courses"},
+     *     security={{"bearerAuth":{}}},
+     *     @OA\Response(response=200, description="Successful operation")
+     * )
      */
     public function index()
     {
@@ -41,7 +54,24 @@ class CourseController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * @OA\Post(
+     *     path="/courses",
+     *     summary="Create a new course (Teacher only)",
+     *     tags={"Courses"},
+     *     security={{"bearerAuth":{}}},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"title","description","price"},
+     *             @OA\Property(property="title", type="string"),
+     *             @OA\Property(property="description", type="string"),
+     *             @OA\Property(property="price", type="number", format="float"),
+     *             @OA\Property(property="category_id", type="integer", nullable=true)
+     *         )
+     *     ),
+     *     @OA\Response(response=201, description="Course created successfully"),
+     *     @OA\Response(response=403, description="Forbidden")
+     * )
      */
     public function store(Request $request)
     {
@@ -62,7 +92,20 @@ class CourseController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * @OA\Get(
+     *     path="/courses/{id}",
+     *     summary="Display the specified course details",
+     *     tags={"Courses"},
+     *     security={{"bearerAuth":{}}},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(response=200, description="Successful operation"),
+     *     @OA\Response(response=404, description="Course not found")
+     * )
      */
     public function show(string $id)
     {
@@ -71,7 +114,30 @@ class CourseController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * @OA\Put(
+     *     path="/courses/{id}",
+     *     summary="Update the specified course (Teacher only)",
+     *     tags={"Courses"},
+     *     security={{"bearerAuth":{}}},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             @OA\Property(property="title", type="string"),
+     *             @OA\Property(property="description", type="string"),
+     *             @OA\Property(property="price", type="number", format="float"),
+     *             @OA\Property(property="category_id", type="integer", nullable=true)
+     *         )
+     *     ),
+     *     @OA\Response(response=200, description="Course updated successfully"),
+     *     @OA\Response(response=403, description="Forbidden"),
+     *     @OA\Response(response=404, description="Course not found")
+     * )
      */
     public function update(Request $request, string $id)
     {
@@ -91,7 +157,21 @@ class CourseController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * @OA\Delete(
+     *     path="/courses/{id}",
+     *     summary="Remove the specified course (Teacher only)",
+     *     tags={"Courses"},
+     *     security={{"bearerAuth":{}}},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(response=204, description="Course deleted successfully"),
+     *     @OA\Response(response=403, description="Forbidden"),
+     *     @OA\Response(response=404, description="Course not found")
+     * )
      */
     public function destroy(string $id)
     {
