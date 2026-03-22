@@ -18,6 +18,22 @@ class EnrollmentController extends Controller
         $this->enrollmentService = $enrollmentService;
     }
 
+    /**
+     * @OA\Post(
+     *     path="/courses/{courseId}/checkout",
+     *     summary="Create a Stripe checkout session for a course",
+     *     tags={"Enrollments"},
+     *     security={{"bearerAuth":{}}},
+     *     @OA\Parameter(
+     *         name="courseId",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(response=200, description="Returns checkout URL"),
+     *     @OA\Response(response=400, description="Error creating session")
+     * )
+     */
     public function checkout(string $courseId)
     {
         try {
@@ -30,6 +46,28 @@ class EnrollmentController extends Controller
         }
     }
 
+    /**
+     * @OA\Get(
+     *     path="/courses/{courseId}/enroll/success",
+     *     summary="Confirm enrollment after successful payment",
+     *     tags={"Enrollments"},
+     *     security={{"bearerAuth":{}}},
+     *     @OA\Parameter(
+     *         name="courseId",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="session_id",
+     *         in="query",
+     *         required=false,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(response=200, description="Enrollment successful"),
+     *     @OA\Response(response=400, description="Enrollment failed")
+     * )
+     */
     public function success(string $courseId, Request $request)
     {
         try {
@@ -41,6 +79,22 @@ class EnrollmentController extends Controller
         }
     }
 
+    /**
+     * @OA\Delete(
+     *     path="/courses/{courseId}/enroll",
+     *     summary="Withdraw from an enrolled course",
+     *     tags={"Enrollments"},
+     *     security={{"bearerAuth":{}}},
+     *     @OA\Parameter(
+     *         name="courseId",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(response=200, description="Successfully withdrawn"),
+     *     @OA\Response(response=403, description="Action not allowed")
+     * )
+     */
     public function withdraw(string $courseId)
     {
         try {
