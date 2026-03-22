@@ -16,6 +16,15 @@ class WishlistController extends Controller
         $this->wishlistService = $wishlistService;
     }
 
+    /**
+     * @OA\Get(
+     *     path="/wishlist",
+     *     summary="Retrieve student's wishlist courses",
+     *     tags={"Wishlist"},
+     *     security={{"bearerAuth":{}}},
+     *     @OA\Response(response=200, description="List of wishlisted courses")
+     * )
+     */
     public function index()
     {
         $user = Auth::user();
@@ -24,6 +33,22 @@ class WishlistController extends Controller
         return response()->json($wishlist);
     }
 
+    /**
+     * @OA\Post(
+     *     path="/wishlist/courses/{courseId}",
+     *     summary="Toggle a course in the wishlist",
+     *     tags={"Wishlist"},
+     *     security={{"bearerAuth":{}}},
+     *     @OA\Parameter(
+     *         name="courseId",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(response=200, description="Wishlist toggled successfully"),
+     *     @OA\Response(response=403, description="Unauthorized")
+     * )
+     */
     public function toggle(string $courseId)
     {
         $user = Auth::user();
